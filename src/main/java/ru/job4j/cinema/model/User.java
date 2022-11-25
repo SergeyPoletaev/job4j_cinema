@@ -1,4 +1,4 @@
-package ru.job4j.model;
+package ru.job4j.cinema.model;
 
 import java.util.Objects;
 
@@ -16,6 +16,10 @@ public class User {
         this.name = name;
         this.email = email;
         this.phone = phone;
+    }
+
+    public User(int id) {
+        this.id = id;
     }
 
     public int getId() {

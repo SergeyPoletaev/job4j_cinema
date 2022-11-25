@@ -1,4 +1,4 @@
-package ru.job4j.model;
+package ru.job4j.cinema.model;
 
 import java.util.Objects;
 
@@ -12,6 +12,10 @@ public class Session {
     public Session(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Session(int id) {
+        this.id = id;
     }
 
     public int getId() {

@@ -1,4 +1,4 @@
-package ru.job4j.model;
+package ru.job4j.cinema.model;
 
 import java.util.Objects;
 
@@ -14,6 +14,13 @@ public class Ticket {
 
     public Ticket(int id, Session session, int posRow, int cell, User user) {
         this.id = id;
+        this.session = session;
+        this.posRow = posRow;
+        this.cell = cell;
+        this.user = user;
+    }
+
+    public Ticket(Session session, int posRow, int cell, User user) {
         this.session = session;
         this.posRow = posRow;
         this.cell = cell;
