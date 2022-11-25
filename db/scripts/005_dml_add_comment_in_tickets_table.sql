@@ -1,0 +1,1 @@
+comment on column tickets.user_id is 'Внешний ключ на владельца билета';
