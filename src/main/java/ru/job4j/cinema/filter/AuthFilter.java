@@ -1,7 +1,7 @@
 package ru.job4j.cinema.filter;
 
 import org.springframework.stereotype.Component;
-import ru.job4j.cinema.enums.UnfilteredUrn;
+import ru.job4j.cinema.enumeration.UnfilteredUrn;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

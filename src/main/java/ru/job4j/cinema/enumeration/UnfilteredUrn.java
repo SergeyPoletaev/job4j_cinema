@@ -1,4 +1,4 @@
-package ru.job4j.cinema.enums;
+package ru.job4j.cinema.enumeration;
 
 public enum UnfilteredUrn {
     INDEX("index"),

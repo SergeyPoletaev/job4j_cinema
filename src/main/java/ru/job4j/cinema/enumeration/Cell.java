@@ -1,11 +1,11 @@
-package ru.job4j.cinema.enums;
+package ru.job4j.cinema.enumeration;
 
-public enum Row {
+public enum Cell {
     ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5);
 
     private final int value;
 
-    Row(int value) {
+    Cell(int value) {
         this.value = value;
     }
 
