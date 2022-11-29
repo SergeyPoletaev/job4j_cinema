@@ -76,3 +76,6 @@ java -jar job4j_cinema-1.0-SNAPSHOT.jar
 
 ![бронирование](img/booking.png)
 
+### Контакты
+
+telegram: [@svpoletaev](https://t.me/svpoletaev)
