@@ -1,12 +1,12 @@
 package ru.job4j.cinema.repository;
 
 import net.jcip.annotations.ThreadSafe;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.User;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
 
@@ -16,9 +16,9 @@ public class UserDbStore {
     private static final Logger LOG = LoggerFactory.getLogger(UserDbStore.class.getName());
     private static final String INSERT_INTO_USER = "insert into users (name, email, phone) values (?, ?, ?)";
     private static final String SELECT_USERS_BY_EMAIL_AND_PHONE = "select * from users where email = ? and phone = ?";
-    private final BasicDataSource pool;
+    private final DataSource pool;
 
-    public UserDbStore(BasicDataSource pool) {
+    public UserDbStore(DataSource pool) {
         this.pool = pool;
     }
 

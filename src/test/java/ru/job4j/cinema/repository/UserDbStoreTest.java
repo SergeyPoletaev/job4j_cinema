@@ -5,26 +5,35 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.job4j.cinema.App;
+import ru.job4j.cinema.config.DataSourceConfig;
 import ru.job4j.cinema.model.User;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserDbStoreTest {
-    private static BasicDataSource pool;
+    private static DataSource pool;
 
     @BeforeAll
     static void initPool() {
-        pool = new App().loadPool();
+        DataSourceConfig config = new DataSourceConfig();
+        Properties prop = config.loadDbProperties();
+        pool = config.loadPool(
+                prop.getProperty("jdbc.driver"),
+                prop.getProperty("jdbc.url"),
+                prop.getProperty("jdbc.username"),
+                prop.getProperty("jdbc.password")
+        );
     }
 
     @AfterAll
     static void close() throws SQLException {
-        pool.close();
+        ((BasicDataSource) pool).close();
     }
 
     @AfterEach

@@ -1,12 +1,12 @@
 package ru.job4j.cinema.repository;
 
 import net.jcip.annotations.ThreadSafe;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.Ticket;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,9 @@ public class TicketDbStore {
     private static final Logger LOG = LoggerFactory.getLogger(TicketDbStore.class.getName());
     private static final String INSERT_INTO_TICKET = "insert into tickets (session_id, pos_row, cell, user_id) values (?, ?, ?, ?)";
     private static final String SELECT_ALL_TICKET = "select * from tickets";
-    private final BasicDataSource pool;
+    private final DataSource pool;
 
-    public TicketDbStore(BasicDataSource pool) {
+    public TicketDbStore(DataSource pool) {
         this.pool = pool;
     }
 

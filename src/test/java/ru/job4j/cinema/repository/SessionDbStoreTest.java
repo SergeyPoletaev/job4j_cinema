@@ -5,27 +5,36 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.job4j.cinema.App;
+import ru.job4j.cinema.config.DataSourceConfig;
 import ru.job4j.cinema.model.Session;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SessionDbStoreTest {
-    private static BasicDataSource pool;
+    private static DataSource pool;
 
     @BeforeAll
     static void initPoll() {
-        pool = new App().loadPool();
+        DataSourceConfig config = new DataSourceConfig();
+        Properties prop = config.loadDbProperties();
+        pool = config.loadPool(
+                prop.getProperty("jdbc.driver"),
+                prop.getProperty("jdbc.url"),
+                prop.getProperty("jdbc.username"),
+                prop.getProperty("jdbc.password")
+        );
     }
 
     @AfterAll
     static void close() throws SQLException {
-        pool.close();
+        ((BasicDataSource) pool).close();
     }
 
     @BeforeEach

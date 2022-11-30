@@ -1,12 +1,12 @@
 package ru.job4j.cinema.repository;
 
 import net.jcip.annotations.ThreadSafe;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.Session;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,9 @@ public class SessionDbStore {
     private static final Logger LOG = LoggerFactory.getLogger(SessionDbStore.class.getName());
     private static final String SELECT_ALL_SESSIONS = "select * from sessions";
     private static final String INSERT_INTO_SESSION = "insert into sessions (name) values (?)";
-    private final BasicDataSource pool;
+    private final DataSource pool;
 
-    public SessionDbStore(BasicDataSource pool) {
+    public SessionDbStore(DataSource pool) {
         this.pool = pool;
     }
 
