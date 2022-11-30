@@ -5,9 +5,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
-import ru.job4j.cinema.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,10 +27,10 @@ public class TicketDbStore {
         boolean rsl = false;
         try (Connection conn = pool.getConnection();
              PreparedStatement ps = conn.prepareStatement(INSERT_INTO_TICKET, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, ticket.getSession().getId());
+            ps.setInt(1, ticket.getSessionId());
             ps.setInt(2, ticket.getPosRow());
             ps.setInt(3, ticket.getCell());
-            ps.setInt(4, ticket.getUser().getId());
+            ps.setInt(4, ticket.getUserId());
             rsl = ps.executeUpdate() > 0;
             try (ResultSet resultSet = ps.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -63,10 +61,10 @@ public class TicketDbStore {
     private Ticket getTicket(ResultSet resultSet) throws SQLException {
         return new Ticket(
                 resultSet.getInt("id"),
-                new Session(resultSet.getInt("session_id")),
+                resultSet.getInt("session_id"),
                 resultSet.getInt("pos_row"),
                 resultSet.getInt("cell"),
-                new User(resultSet.getInt("user_id"))
+                resultSet.getInt("user_id")
         );
     }
 }

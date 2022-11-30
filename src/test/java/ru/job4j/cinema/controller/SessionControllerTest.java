@@ -7,7 +7,6 @@ import ru.job4j.cinema.enumeration.Cell;
 import ru.job4j.cinema.enumeration.Row;
 import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
-import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.SessionService;
 import ru.job4j.cinema.util.HttpHelper;
 
@@ -70,7 +69,7 @@ class SessionControllerTest {
         SessionService sessionService = mock(SessionService.class);
         HttpSession httpSession = mock(HttpSession.class);
         SessionController sessionController = new SessionController(sessionService);
-        Ticket ticket = new Ticket(1, new Session(), 2, 3, new User());
+        Ticket ticket = new Ticket(1, 4, 2, 3, 5);
         String page = sessionController.selectRow(ticket, httpSession);
         verify(httpSession).setAttribute("row", ticket.getPosRow());
         assertThat(page).isEqualTo("redirect:/formCellSelection");
@@ -96,7 +95,7 @@ class SessionControllerTest {
         SessionService sessionService = mock(SessionService.class);
         HttpSession httpSession = mock(HttpSession.class);
         SessionController sessionController = new SessionController(sessionService);
-        Ticket ticket = new Ticket(1, new Session(), 2, 3, new User());
+        Ticket ticket = new Ticket(1, 4, 2, 3, 5);
         String page = sessionController.selectCell(ticket, httpSession);
         verify(httpSession).setAttribute("cell", ticket.getCell());
         assertThat(page).isEqualTo("redirect:/formBookingTicket");

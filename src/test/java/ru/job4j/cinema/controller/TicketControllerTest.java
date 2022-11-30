@@ -77,7 +77,7 @@ class TicketControllerTest {
         when(httpSession.getAttribute("row")).thenReturn(2);
         when(httpSession.getAttribute("cell")).thenReturn(3);
         when((User) httpSession.getAttribute("user")).thenReturn(user);
-        Ticket ticket = new Ticket(session, 2, 3, user);
+        Ticket ticket = new Ticket(4, 2, 3, 5);
         when(ticketService.add(ticket)).thenReturn(true);
         String page;
         try (MockedStatic<HttpHelper> httpHelper = mockStatic(HttpHelper.class)) {
@@ -102,7 +102,7 @@ class TicketControllerTest {
         when(httpSession.getAttribute("row")).thenReturn(2);
         when(httpSession.getAttribute("cell")).thenReturn(3);
         when((User) httpSession.getAttribute("user")).thenReturn(user);
-        Ticket ticket = new Ticket(session, 2, 3, user);
+        Ticket ticket = new Ticket(4, 2, 3, 5);
         when(ticketService.add(ticket)).thenReturn(false);
         String page;
         try (MockedStatic<HttpHelper> httpHelper = mockStatic(HttpHelper.class)) {

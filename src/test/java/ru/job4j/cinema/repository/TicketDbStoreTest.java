@@ -52,8 +52,8 @@ class TicketDbStoreTest {
         User user = new User(1, "anna", "anna@", "123");
         UserDbStore userDbStore = new UserDbStore(pool);
         userDbStore.add(user);
-        Ticket ticket1 = new Ticket(1, session1, 2, 3, user);
-        Ticket ticket2 = new Ticket(2, session2, 4, 5, user);
+        Ticket ticket1 = new Ticket(session1.getId(), 2, 3, user.getId());
+        Ticket ticket2 = new Ticket(session2.getId(), 4, 5, user.getId());
         TicketDbStore ticketDbStore = new TicketDbStore(pool);
         ticketDbStore.add(ticket1);
         ticketDbStore.add(ticket2);

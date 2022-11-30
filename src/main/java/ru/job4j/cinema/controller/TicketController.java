@@ -51,10 +51,10 @@ public class TicketController {
     public String confirmBooking(Model model, HttpSession httpSession) {
         addUserToModel(httpSession, model);
         Ticket ticket = new Ticket(
-                (Session) httpSession.getAttribute("session"),
+                ((Session) httpSession.getAttribute("session")).getId(),
                 (Integer) httpSession.getAttribute("row"),
                 (Integer) httpSession.getAttribute("cell"),
-                (User) httpSession.getAttribute("user")
+                ((User) httpSession.getAttribute("user")).getId()
         );
         if (ticketService.add(ticket)) {
             clearHttpSessionAttr(httpSession, List.of("session", "row", "cell"));
