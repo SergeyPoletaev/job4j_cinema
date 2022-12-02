@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.config.DataSourceConfig;
+import ru.job4j.cinema.config.TestDataSourceConfig;
 import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
@@ -24,9 +25,8 @@ class TicketDbStoreTest {
 
     @BeforeAll
     static void initPool() {
-        DataSourceConfig config = new DataSourceConfig();
-        Properties prop = config.loadDbProperties();
-        pool = config.loadPool(
+        Properties prop = new TestDataSourceConfig().loadDbProperties();
+        pool = new DataSourceConfig().loadPool(
                 prop.getProperty("jdbc.driver"),
                 prop.getProperty("jdbc.url"),
                 prop.getProperty("jdbc.username"),
