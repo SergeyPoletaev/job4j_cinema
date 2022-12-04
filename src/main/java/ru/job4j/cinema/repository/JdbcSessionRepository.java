@@ -13,16 +13,17 @@ import java.util.List;
 
 @ThreadSafe
 @Repository
-public class SessionDbStore {
-    private static final Logger LOG = LoggerFactory.getLogger(SessionDbStore.class.getName());
+public class JdbcSessionRepository implements SessionRepository {
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcSessionRepository.class.getName());
     private static final String SELECT_ALL_SESSIONS = "select * from sessions";
     private static final String INSERT_INTO_SESSION = "insert into sessions (name) values (?)";
     private final DataSource pool;
 
-    public SessionDbStore(DataSource pool) {
+    public JdbcSessionRepository(DataSource pool) {
         this.pool = pool;
     }
 
+    @Override
     public boolean add(Session session) {
         boolean rsl = false;
         try (Connection conn = pool.getConnection();
@@ -40,6 +41,7 @@ public class SessionDbStore {
         return rsl;
     }
 
+    @Override
     public List<Session> findAll() {
         List<Session> rsl = new ArrayList<>();
         try (Connection conn = pool.getConnection();

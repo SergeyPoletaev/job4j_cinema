@@ -17,7 +17,7 @@ import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserDbStoreTest {
+class JdbcUserRepositoryTest {
     private static DataSource pool;
 
     @BeforeAll
@@ -46,10 +46,10 @@ class UserDbStoreTest {
 
     @Test
     void whenAddUser() {
-        UserDbStore userDbStore = new UserDbStore(pool);
+        UserRepository userRepository = new JdbcUserRepository(pool);
         User user = new User(0, "anna", "anna@", "123");
-        userDbStore.add(user);
-        User userDb = userDbStore.findUserByEmailAndPhone(
+        userRepository.add(user);
+        User userDb = userRepository.findUserByEmailAndPhone(
                 user.getEmail(),
                 user.getPhone()).orElseThrow();
         assertThat(userDb).isEqualTo(user);

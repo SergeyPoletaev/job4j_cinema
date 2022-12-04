@@ -18,7 +18,7 @@ import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SessionDbStoreTest {
+class JdbcSessionRepositoryTest {
     private static DataSource pool;
 
     @BeforeAll
@@ -49,10 +49,10 @@ class SessionDbStoreTest {
     void whenFindAllSessions() {
         Session session1 = new Session(1, "one");
         Session session2 = new Session(2, "two");
-        SessionDbStore sessionDbStore = new SessionDbStore(pool);
-        sessionDbStore.add(session1);
-        sessionDbStore.add(session2);
-        assertThat(sessionDbStore.findAll()).isEqualTo(List.of(session1, session2));
+        SessionRepository sessionRepository = new JdbcSessionRepository(pool);
+        sessionRepository.add(session1);
+        sessionRepository.add(session2);
+        assertThat(sessionRepository.findAll()).isEqualTo(List.of(session1, session2));
     }
 
 }

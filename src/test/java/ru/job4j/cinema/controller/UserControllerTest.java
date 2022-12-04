@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.UserService;
+import ru.job4j.cinema.service.UserServiceImpl;
 import ru.job4j.cinema.util.HttpHelper;
 
 import javax.servlet.http.HttpSession;
@@ -72,7 +73,7 @@ class UserControllerTest {
 
     @Test
     void whenLoginThenSuccess() {
-        UserService userService = mock(UserService.class);
+        UserService userService = mock(UserServiceImpl.class);
         User user = new User(1, "anna", "anna@", "123");
         when(userService.findUserByEmailAndPhone("anna@", "123")).thenReturn(Optional.of(user));
         UserController userController = new UserController(userService);

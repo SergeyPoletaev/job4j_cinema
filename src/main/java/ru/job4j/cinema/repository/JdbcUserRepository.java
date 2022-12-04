@@ -12,16 +12,17 @@ import java.util.Optional;
 
 @ThreadSafe
 @Repository
-public class UserDbStore {
-    private static final Logger LOG = LoggerFactory.getLogger(UserDbStore.class.getName());
+public class JdbcUserRepository implements UserRepository {
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcUserRepository.class.getName());
     private static final String INSERT_INTO_USER = "insert into users (name, email, phone) values (?, ?, ?)";
     private static final String SELECT_USERS_BY_EMAIL_AND_PHONE = "select * from users where email = ? and phone = ?";
     private final DataSource pool;
 
-    public UserDbStore(DataSource pool) {
+    public JdbcUserRepository(DataSource pool) {
         this.pool = pool;
     }
 
+    @Override
     public boolean add(User user) {
         boolean rsl = false;
         try (Connection conn = pool.getConnection();
@@ -41,6 +42,7 @@ public class UserDbStore {
         return rsl;
     }
 
+    @Override
     public Optional<User> findUserByEmailAndPhone(String email, String phone) {
         Optional<User> rsl = Optional.empty();
         try (Connection cn = pool.getConnection();

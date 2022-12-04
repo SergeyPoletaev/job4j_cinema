@@ -13,16 +13,17 @@ import java.util.List;
 
 @ThreadSafe
 @Repository
-public class TicketDbStore {
-    private static final Logger LOG = LoggerFactory.getLogger(TicketDbStore.class.getName());
+public class JdbcTicketRepository implements TicketRepository {
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcTicketRepository.class.getName());
     private static final String INSERT_INTO_TICKET = "insert into tickets (session_id, pos_row, cell, user_id) values (?, ?, ?, ?)";
     private static final String SELECT_ALL_TICKET = "select * from tickets";
     private final DataSource pool;
 
-    public TicketDbStore(DataSource pool) {
+    public JdbcTicketRepository(DataSource pool) {
         this.pool = pool;
     }
 
+    @Override
     public boolean add(Ticket ticket) {
         boolean rsl = false;
         try (Connection conn = pool.getConnection();
@@ -43,6 +44,7 @@ public class TicketDbStore {
         return rsl;
     }
 
+    @Override
     public List<Ticket> findAll() {
         List<Ticket> tickets = new ArrayList<>();
         try (Connection conn = pool.getConnection();
