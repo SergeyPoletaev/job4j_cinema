@@ -17,16 +17,16 @@ public class JdbcSessionRepository implements SessionRepository {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcSessionRepository.class.getName());
     private static final String SELECT_ALL_SESSIONS = "select * from sessions";
     private static final String INSERT_INTO_SESSION = "insert into sessions (name) values (?)";
-    private final DataSource pool;
+    private final DataSource dataSource;
 
-    public JdbcSessionRepository(DataSource pool) {
-        this.pool = pool;
+    public JdbcSessionRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public boolean add(Session session) {
         boolean rsl = false;
-        try (Connection conn = pool.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(INSERT_INTO_SESSION, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, session.getName());
             rsl = ps.executeUpdate() > 0;
@@ -44,7 +44,7 @@ public class JdbcSessionRepository implements SessionRepository {
     @Override
     public List<Session> findAll() {
         List<Session> rsl = new ArrayList<>();
-        try (Connection conn = pool.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(SELECT_ALL_SESSIONS)) {
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {

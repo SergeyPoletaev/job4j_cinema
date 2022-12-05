@@ -16,16 +16,16 @@ public class JdbcUserRepository implements UserRepository {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcUserRepository.class.getName());
     private static final String INSERT_INTO_USER = "insert into users (name, email, phone) values (?, ?, ?)";
     private static final String SELECT_USERS_BY_EMAIL_AND_PHONE = "select * from users where email = ? and phone = ?";
-    private final DataSource pool;
+    private final DataSource dataSource;
 
-    public JdbcUserRepository(DataSource pool) {
-        this.pool = pool;
+    public JdbcUserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public boolean add(User user) {
         boolean rsl = false;
-        try (Connection conn = pool.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(INSERT_INTO_USER, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -45,7 +45,7 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public Optional<User> findUserByEmailAndPhone(String email, String phone) {
         Optional<User> rsl = Optional.empty();
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(SELECT_USERS_BY_EMAIL_AND_PHONE)
         ) {
             ps.setString(1, email);

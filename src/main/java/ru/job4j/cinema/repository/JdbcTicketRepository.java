@@ -17,16 +17,16 @@ public class JdbcTicketRepository implements TicketRepository {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcTicketRepository.class.getName());
     private static final String INSERT_INTO_TICKET = "insert into tickets (session_id, pos_row, cell, user_id) values (?, ?, ?, ?)";
     private static final String SELECT_ALL_TICKET = "select * from tickets";
-    private final DataSource pool;
+    private final DataSource dataSource;
 
-    public JdbcTicketRepository(DataSource pool) {
-        this.pool = pool;
+    public JdbcTicketRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public boolean add(Ticket ticket) {
         boolean rsl = false;
-        try (Connection conn = pool.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(INSERT_INTO_TICKET, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, ticket.getSessionId());
             ps.setInt(2, ticket.getPosRow());
@@ -47,7 +47,7 @@ public class JdbcTicketRepository implements TicketRepository {
     @Override
     public List<Ticket> findAll() {
         List<Ticket> tickets = new ArrayList<>();
-        try (Connection conn = pool.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(SELECT_ALL_TICKET)) {
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {
